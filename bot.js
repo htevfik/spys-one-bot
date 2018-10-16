@@ -112,16 +112,16 @@ class Bot {
             return rows;
         });
     }
-    run(hr = false) {
+    run(returnResult = false, humanReadable = false) {
         return __awaiter(this, void 0, void 0, function* () {
             let results = yield this.crawl();
-            if (results.length == 0) {
-                console.log("NO RESULT FOUND");
-                return;
+            if (returnResult || results.length == 0) {
+                return results;
             }
-            const json = JSON.stringify(results, null, hr ? 2 : null), dirPath = path_1.join(__dirname, "output"), filePath = path_1.join(dirPath, Bot.safeDate() + ".json");
+            const json = JSON.stringify(results, null, humanReadable ? 2 : null), dirPath = path_1.join(__dirname, "output"), filePath = path_1.join(dirPath, Bot.safeDate() + ".json");
             yield this.createDir(dirPath);
             yield util_1.promisify(fs_1.writeFile)(filePath, json);
+            return results;
         });
     }
 }

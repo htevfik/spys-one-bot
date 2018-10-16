@@ -117,20 +117,22 @@ export class Bot {
     return rows;
   }
 
-  async run(hr: boolean = false) {
+  async run(returnResult: boolean = false, humanReadable: boolean = false) {
     let results = await this.crawl();
 
-    if (results.length == 0) {
-      console.log("NO RESULT FOUND")
-      return;
+    if (returnResult || results.length == 0) {
+      return results;
     }
 
     const
-      json = JSON.stringify(results, null, hr ? 2 : null),
+      json = JSON.stringify(results, null, humanReadable ? 2 : null),
       dirPath = join(__dirname, "output"),
       filePath = join(dirPath, Bot.safeDate() + ".json");
 
+
     await this.createDir(dirPath);
     await promisify(writeFile)(filePath, json);
+
+    return results;
   }
 }
