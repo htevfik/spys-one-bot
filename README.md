@@ -3,13 +3,22 @@
 ## usage
 
 ```javascript
-const bot = require('spys-one-bot');
+const bot = require("./dist");
 
-bot.run(
-  false, // if true bot will return results
-         // else bot will save the resuts ./output/{DATE}.json file
-  false, // if true output file will be human readable
-).then(results => {
-  console.log(results);
+bot.run({
+  formData: {
+    xpp: 5,
+    xf1: 0,
+    xf2: 0,
+    xf4: 2,
+    xf5: 0
+  },
+  cache: false,
+  cachePath: "./cache",
+  output: false,
+  outputPath: "./output",
+  humanReadable: false
+}).then(results => {
+  console.log(results[0]);
 });
 ```
